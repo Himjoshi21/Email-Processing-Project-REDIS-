@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Batch {
+  id             String    @id @default(cuid())
+  filename       String
+  totalEmails    Int       @map("total_emails")
+  processedCount Int       @default(0) @map("processed_count")
+  status         String    @default("pending")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  completed      DateTime? @map("completed_at")
+
+  emails Email[]
+}
+
+model Email {
+  id        String   @id @default(cuid())
+  batchId   String   @map("batch_id")
+  email     String
+  status    String   @default("pending")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  batch Batch @relation(fields: [batchId], references: [id], onDelete: Cascade)
+}

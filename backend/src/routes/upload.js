@@ -1,6 +1,6 @@
 import multer from "multer";
 import { parse } from "csv-parse";
-import { prisma } from "../db.js";
+import prisma from "../db.js";
 import { publishBatchStatus, setBatchEmails } from "../redis.js";
 import { addBatchToQueue } from "../queue.js";
 
@@ -39,7 +39,7 @@ function parseCsv(buffer) {
 }
 
 export function registerUploadRoutes(app) {
-  app.post("/api/upload", upload.single(file), async (req, res) => {
+  app.post("/api/upload", upload.single('file'), async (req, res) => {
     try {
       if (!req.file) {
         return res
@@ -53,6 +53,8 @@ export function registerUploadRoutes(app) {
             "No valid emails found in CSV. CSV should have one email per line (or one column).",
         });
       }
+      console.log("Batch Model =", prisma.batch);
+      console.log("Email Model =", prisma.email);
 
       const batch = await prisma.batch.create({
         data: {
@@ -81,8 +83,8 @@ export function registerUploadRoutes(app) {
         message:'Batch queued for processing'
       })
     } catch (error) {
-      console.error('Upload error:', err);
-      res.status(500).json({ error: err.message || 'Upload failed' });
+      console.error('Upload error:', error);
+      res.status(500).json({ error: error.message || 'Upload failed' });
     }
   });
 }

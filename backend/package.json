@@ -4,6 +4,7 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "nodemon src/index.js",
+    "worker":"nodemon src/worker.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -23,6 +24,6 @@
     "pg": "^8.21.0"
   },
   "devDependencies": {
-    "prisma": "^6.16.2"
+    "prisma": "^6.19.3"
   }
 }

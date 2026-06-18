@@ -3,7 +3,7 @@ CREATE TABLE "Batch" (
     "id" TEXT NOT NULL,
     "filename" TEXT NOT NULL,
     "total_emails" INTEGER NOT NULL,
-    "processed_count" INTEGER NOT NULL DEFAULT 0,
+    "inserted_count" INTEGER NOT NULL DEFAULT 0,
     "status" TEXT NOT NULL DEFAULT 'pending',
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "completed_at" TIMESTAMP(3),
@@ -16,7 +16,6 @@ CREATE TABLE "Email" (
     "id" TEXT NOT NULL,
     "batch_id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "status" TEXT NOT NULL DEFAULT 'pending',
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Email_pkey" PRIMARY KEY ("id")
